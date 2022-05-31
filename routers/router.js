@@ -1,19 +1,24 @@
 const express = require('express')
 const router = express.Router()
 
-const controlador = require('../controller/controlador')
+const controladorObtener = require('../controller/controladorObtener')
+const controladorObtenerUser = require('../controller/controladorObtenerUser')
+const controladorRegistrar = require('../controller/controladorRegistrar')
+const controladorEliminar = require('../controller/controladorEliminar')
+const controladorEditar = require('../controller/controladorEditar')
+const controladorLogin = require('../controller/controladorLogin')
 
-router.get('/', controlador.consultarAll)
+router.get('/', controladorObtener.consultarAll)
 
-router.get('/user/:correo', controlador.consultarUser)
+router.get('/user/:correo', controladorObtenerUser.consultarUser)
 
-router.post('/usernuevo', controlador.registrar)
+router.post('/usernuevo', controladorRegistrar.add)
 
-router.post('/login', controlador.ingresar)
+router.post('/login', controladorLogin.ingresar)
 
-router.put('/user/:correo', controlador.actualizar)
+router.put('/user/:correo', controladorEditar.actualizar)
 
-router.delete('/user/:correo', controlador.eliminar)
+router.delete('/user/:correo', controladorEliminar.delete)
 
 
 module.exports = router
