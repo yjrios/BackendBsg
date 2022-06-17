@@ -2,10 +2,11 @@ const conexion = require('../conexion')
 
 //########################### DELETE
 exports.delete = async(req,res) =>{
-    const cuenta = req.params.username
+    const username = req.params.username
     try {
-        if(cuenta !== 0){
-            await conexion.query('DELETE FROM USERS WHERE ID = ?',[cuenta], (error, resultado)=>{
+        if(username){
+            console.log('dentro de if username')
+            await conexion.query('DELETE FROM USERS WHERE USERNAME = ?', username, (error, resultado)=>{
                 if(error){
                     res.status(404).json({
                         success: false,

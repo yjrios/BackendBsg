@@ -2,19 +2,14 @@ const conexion = require('../conexion')
 const bcrypt = require('bcrypt')
 const jwt = require('jsonwebtoken')
 
-
 //########################### LOGIN
 exports.ingresar = async(req, res) => {
     const data = req.body
-    console.log('INGRESAR')
     try {
         if(data.username){
-            console.log('IF data.username '+data.username)
             await conexion.query('SELECT * FROM USERS WHERE USERNAME = ?',[data.username], (error, resultado)=>{
                 if(error){
-                    return res.status(404).json({
-                        mensaje: 'Ususario incorrecto'
-                    })
+                    throw error
                 }
                 if(resultado.length == 0){
                     return res.status(404).json({
@@ -33,9 +28,10 @@ exports.ingresar = async(req, res) => {
                 apellidos: resultado[0].apellidos,
                 cargo: resultado[0].cargo,
                 img: resultado[0].img,
-                nivel: resultado[0].nivel} 
+                id_nivel: resultado[0].id_nivel}
                 //########################### GENERAR TOKEN
-                const token = jwt.sign( { data: info }, process.env.JWT_WORD,{expiresIn: process.env.JWT_VENCE * 60 * 24} )
+                console.log(process.env.JWT_VENCE)
+                const token = jwt.sign( { data: info }, process.env.JWT_WORD,{expiresIn: process.env.JWT_VENCE} )
 
                 res.json({
                     info,
