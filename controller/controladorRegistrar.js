@@ -3,8 +3,6 @@ const conexion = require('../conexion')
 const bcrypt = require('bcrypt')
 const saltos = 12
 
-
-
 //########################### POST
 exports.add = async(req, res) =>{
     const passwordencriptado = bcrypt.hashSync(req.body.password, saltos)

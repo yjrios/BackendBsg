@@ -13,20 +13,17 @@ var storage = multer.diskStorage({
 })
 
 var storage2 = multer.diskStorage({
-  destination: function (req, file, cb) {
-    cb(null, './uploads')
+  destination: function (req, img, cb) {
+    cb(null, '../../photos')
   },
-  filename: function (req, file, cb) {
+  filename: function (req, img, cb) {
     const prefijounico  = Date.now() + '-' + Math.round(Math.random() * 1E9)
-    cb(null, prefijounico + file.originalname)
+    cb(null, prefijounico + img.originalname)
   }
 })
 
-var loadfile = multer({ storage: storage2 })
-
 var upload = multer({ storage: storage })
-
-
+var filexcel = multer({ storage: storage2 })
 
 const controladorObtener = require('../controller/controladorObtener')
 const controladorObtenerNiveles = require('../controller/obtenerNiveles')
@@ -35,7 +32,7 @@ const controladorRegistrar = require('../controller/controladorRegistrar')
 const controladorEliminar = require('../controller/controladorEliminar')
 const controladorEditar = require('../controller/controladorEditar')
 const controladorLogin = require('../controller/controladorLogin')
-const controladorFiles = require('../controller/documents')
+const leerExcel = require('../controller/controladorDataexcel')
 
 const authentic = require('../middelwares/auth')
 
@@ -47,13 +44,11 @@ router.get('/user/niveles', controladorObtenerNiveles.consultarNiveles)
 
 router.get('/user/:username', controladorObtenerUser.consultarUser)
 
-router.get('/leerarchivoexcel/:fecha', controladorFiles.readfile)
-
-router.post('/usernuevo', authentic.autenticarte, upload.single('img'), controladorRegistrar.add)
-
-router.post('/cargadedocumento', loadfile.single('file'), controladorFiles.addfile)
+router.post('/cargadedocumento', [leerExcel.readexcel,leerExcel.inserciondatos])
 
 router.post('/login', controladorLogin.ingresar)
+
+router.post('/usernuevo', authentic.autenticarte, upload.single('img'), controladorRegistrar.add)
 
 router.put('/user/:username', upload.single('img'), controladorEditar.actualizar)
 

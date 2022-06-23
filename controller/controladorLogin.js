@@ -30,7 +30,6 @@ exports.ingresar = async(req, res) => {
                 img: resultado[0].img,
                 id_nivel: resultado[0].id_nivel}
                 //########################### GENERAR TOKEN
-                console.log(process.env.JWT_VENCE)
                 const token = jwt.sign( { data: info }, process.env.JWT_WORD,{expiresIn: process.env.JWT_VENCE} )
 
                 res.json({
