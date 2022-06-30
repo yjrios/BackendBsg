@@ -33,8 +33,10 @@ const controladorEliminar = require('../controller/controladorEliminar')
 const controladorEditar = require('../controller/controladorEditar')
 const controladorLogin = require('../controller/controladorLogin')
 const leerExcel = require('../controller/controladorDataexcel')
+const controladorsolicituddata = require('../controller/controladorsolicituddata')
 
 const authentic = require('../middelwares/auth')
+const verificar = require('../middelwares/verificar')
 
 router.get('/', controladorObtener.consultarAll)
 
@@ -43,6 +45,10 @@ router.get('/verify',[authentic.autenticarte, authentic.nivelUsuario])
 router.get('/user/niveles', controladorObtenerNiveles.consultarNiveles)
 
 router.get('/user/:username', controladorObtenerUser.consultarUser)
+
+//router.get('/obtenerdataporfecha/:fechas', [verificar.sesionactiva, verificar.nivel, controladorsolicituddata.getrange])
+
+router.get('/obtenerdataporfecha', [controladorsolicituddata.getrangeone,controladorsolicituddata.getrangetwo])
 
 router.post('/cargadedocumento', [leerExcel.readexcel,leerExcel.inserciondatos])
 
