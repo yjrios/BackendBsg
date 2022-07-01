@@ -26,6 +26,7 @@ var upload = multer({ storage: storage })
 var filexcel = multer({ storage: storage2 })
 
 const controladorObtener = require('../controller/controladorObtener')
+const controladorlistarexcel = require('../controller/controladorlistarexcel')
 const controladorObtenerNiveles = require('../controller/obtenerNiveles')
 const controladorObtenerUser = require('../controller/controladorObtenerUser')
 const controladorRegistrar = require('../controller/controladorRegistrar')
@@ -39,6 +40,8 @@ const authentic = require('../middelwares/auth')
 const verificar = require('../middelwares/verificar')
 
 router.get('/', controladorObtener.consultarAll)
+
+router.get('/listar', [verificar.sesionactiva, verificar.nivel, controladorlistarexcel.listardata])
 
 router.get('/verify',[authentic.autenticarte, authentic.nivelUsuario])
 
