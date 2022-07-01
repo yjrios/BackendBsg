@@ -57,7 +57,7 @@ router.post('/cargadedocumento', [leerExcel.readexcel,leerExcel.inserciondatos])
 
 router.post('/login', controladorLogin.ingresar)
 
-router.post('/usernuevo', authentic.autenticarte, upload.single('img'), controladorRegistrar.add)
+router.post('/usernuevo', upload.single('img'), [controladorRegistrar.verificarEmail,controladorRegistrar.add])
 
 router.put('/user/:username', upload.single('img'), controladorEditar.actualizar)
 
