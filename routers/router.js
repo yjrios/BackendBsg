@@ -12,18 +12,7 @@ var storage = multer.diskStorage({
   }
 })
 
-var storage2 = multer.diskStorage({
-  destination: function (req, img, cb) {
-    cb(null, '../../photos')
-  },
-  filename: function (req, img, cb) {
-    const prefijounico  = Date.now() + '-' + Math.round(Math.random() * 1E9)
-    cb(null, prefijounico + img.originalname)
-  }
-})
-
 var upload = multer({ storage: storage })
-var filexcel = multer({ storage: storage2 })
 
 const controladorObtener = require('../controller/controladorObtener')
 const controladorlistarexcel = require('../controller/controladorlistarexcel')
@@ -48,8 +37,6 @@ router.get('/verify',[authentic.autenticarte, authentic.nivelUsuario])
 router.get('/user/niveles', controladorObtenerNiveles.consultarNiveles)
 
 router.get('/user/:username', controladorObtenerUser.consultarUser)
-
-//router.get('/obtenerdataporfecha/:fechas', [verificar.sesionactiva, verificar.nivel, controladorsolicituddata.getrange])
 
 router.get('/obtenerdataporfecha', [controladorsolicituddata.getrangeone,controladorsolicituddata.getrangetwo])
 
