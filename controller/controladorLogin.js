@@ -1,7 +1,7 @@
 const conexion = require('../conexion')
 const bcrypt = require('bcrypt')
 const jwt = require('jsonwebtoken')
-
+ 
 //########################### LOGIN
 exports.ingresar = async(req, res) => {
     const data = req.body
